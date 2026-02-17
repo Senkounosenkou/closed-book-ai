@@ -186,7 +186,7 @@ with st.sidebar:
 
     uploaded_files = st.file_uploader(
         "ファイルを追加",
-        type=["pdf", "txt", "docx"],
+        type=["pdf", "txt", "docx", "xlsx"],
         accept_multiple_files=True,
         key="my_uploader",
         disabled=is_locked
@@ -219,7 +219,7 @@ with st.sidebar:
 
     st.divider()
 
-    target_exts = (".pdf", ".txt", ".docx")
+    target_exts = (".pdf", ".txt", ".docx", ".xlsx")
     files = [f for f in os.listdir(DATA_DIR) if f.lower().endswith(target_exts)]
     st.subheader("現在のファイル一覧")
 
