@@ -1,0 +1,13 @@
+# Pythonのキャッシュ
+__pycache__/
+*.py[cod]
+
+# Streamlitの個人設定
+.streamlit/config.toml
+
+# ★重要★ 個人データとパスワード
+data/
+storage/
+
+# OSのゴミ
+.DS_Store

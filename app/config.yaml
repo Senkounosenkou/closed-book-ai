@@ -1,0 +1,12 @@
+cookie:
+  expiry_days: 1
+  key: random_signature_key
+  name: random_cookie_name
+credentials:
+  usernames:
+    admin:
+      email: admin@example.com
+      name: Admin User
+      password: $2b$12$41xBf8.13hg14Ig36xSUROmdDm1RmAFE5aKq6aoszdGqTs7beXwxG
+preauthorized:
+  emails: []

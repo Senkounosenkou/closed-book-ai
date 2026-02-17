@@ -1,0 +1,7 @@
+llama-index
+llama-index-llms-ollama
+llama-index-embeddings-ollama
+streamlit
+docx2txt
+streamlit-authenticator
+pyyaml

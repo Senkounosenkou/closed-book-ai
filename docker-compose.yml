@@ -1,0 +1,21 @@
+services:
+  closedbook-app:
+    build: .
+    container_name: closedbook-app
+    # プロキシ設定を削除し、直接起動
+    command: streamlit run main.py --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./app:/app
+      - ./data:/data
+      - ./storage:/app/storage
+      - ./.streamlit:/app/.streamlit
+      - ./app/config.yaml:/app/config.yaml
+    networks:
+      - ollama_default
+    restart: always
+
+networks:
+  ollama_default:
+    external: true
