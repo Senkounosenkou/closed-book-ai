@@ -1,12 +1,16 @@
 services:
   closedbook-app:
+    # 1. 開発中は「build」を使うことで、手元のDockerfile（requirements.txt更新済み）を反映させる
     build: .
+    # 公開用イメージ名も書いておくと、build時にこの名前でタグが付く
+    image: senkounosenkou/closed-book-ai:v1.2
     container_name: closedbook-app
-    # プロキシ設定を削除し、直接起動
+    # プロキシを通さず直接Streamlitを起動
     command: streamlit run main.py --server.address 0.0.0.0
     ports:
       - "8501:8501"
     volumes:
+      # 2. ここがポイント！手元のコードをコンテナに同期
       - ./app:/app
       - ./data:/data
       - ./storage:/app/storage
@@ -18,4 +22,5 @@ services:
 
 networks:
   ollama_default:
+    # 既存のOllamaネットワークに相乗りする設定
     external: true

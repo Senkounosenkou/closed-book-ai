@@ -16,10 +16,10 @@ from llama_index.embeddings.ollama import OllamaEmbedding
 from llama_index.core.vector_stores import MetadataFilters, ExactMatchFilter
 
 
-# --- 0. ページ設定 (一番最初！) ---
+# --- 0. ページ設定 ---
 st.set_page_config(page_title="Closed-Book", page_icon="⚡", layout="wide")
 
-# --- 1. 認証機能 (YAML版) ---
+# --- 1. 認証機能 ---
 config_path = os.path.join(os.path.dirname(__file__), 'config.yaml')
 
 with open(config_path) as file:
@@ -39,7 +39,6 @@ if authentication_status is not True:
     tab1, tab2 = st.tabs(["ログイン", "新規ユーザー登録"])
 
     with tab1:
-        # ログイン画面は既製品でOK（シンプルだから）
         authenticator.login(key='login_form')
         if st.session_state.get('authentication_status') is False:
             st.error('ユーザー名かパスワードが間違っています')
@@ -47,9 +46,9 @@ if authentication_status is not True:
     with tab2:
         st.subheader("新しいアカウントを作成")
         
-        # 入力欄を増やすわよ
+        # 入力欄を整える
         new_user = st.text_input("希望するユーザー名", key="reg_user")
-        new_email = st.text_input("メールアドレス", key="reg_email") # ★追加
+        new_email = st.text_input("メールアドレス", key="reg_email")
         new_pw = st.text_input("パスワード", type="password", key="reg_pw")
         new_pw_confirm = st.text_input("パスワード（確認用）", type="password", key="reg_pw_conf")
 
@@ -85,7 +84,7 @@ if authentication_status is not True:
                         indent=4
                     )
                 
-                st.success(f"ユーザー「{new_user}」を登録したわ！ログインタブからログインしてね。")
+                st.success(f"ユーザー「{new_user}」を登録したよ！ログインタブからログインしてね。")
     
     st.stop()
 
@@ -95,7 +94,7 @@ username = st.session_state.get('username')
 
 
 # ... 以下、ディレクトリ作成の処理へ続く ...
-# ★★★ ログイン成功後の処理 ★★★
+# ログイン成功後の処理
 
 # ログインしたユーザー名を使ってフォルダを分ける
 user_id = username
@@ -310,7 +309,7 @@ with col_btn2:
 
 if st.session_state.is_processing and st.session_state.pending_task_prompt:
     with st.chat_message("assistant"):
-        with st.status("がんばって解析中...", expanded=True) as status:
+        with st.status("大急ぎで解析中...", expanded=True) as status:
             st.write("ドキュメントをスキャンしています...")
             query_engine = index.as_query_engine(filters=filters, similarity_top_k=10)
             response = query_engine.query(st.session_state.pending_task_prompt)

@@ -8,7 +8,7 @@ WORKDIR /app
 COPY .streamlit /app/.streamlit
 COPY requirements.txt .
 
-# 3. 必要なライブラリをインストール（リストを使う形に変更！）
+# 3. 必要なライブラリをインストール
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 4. コンテナ起動コマンド
