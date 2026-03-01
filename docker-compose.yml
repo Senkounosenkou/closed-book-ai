@@ -3,7 +3,7 @@ services:
     # 1. 開発中は「build」を使うことで、手元のDockerfile（requirements.txt更新済み）を反映させる
     build: .
     # 公開用イメージ名も書いておくと、build時にこの名前でタグが付く
-    image: senkounosenkou/closed-book-ai:v1.2
+    image: senkounosenkou/closed-book-ai:v1.4
     container_name: closedbook-app
     # プロキシを通さず直接Streamlitを起動
     command: streamlit run main.py --server.address 0.0.0.0
