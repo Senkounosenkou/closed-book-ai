@@ -1,53 +1,52 @@
-⚡ Closed-Book
+# ⚡ Closed-Book AI (Local RAG Platform)
+
 Local LLM (Ollama) を活用した、プライバシー重視のドキュメント解析プラットフォームです。
+本プロジェクトは、**「AI推論エンジン (Ollama)」** と **「解析アプリ (Streamlit)」** を分離して管理する疎結合なインフラ構成を採用しています。
 
-🚀 主な機能
-ドキュメント参照型QA (RAG): アップロードしたPDFやテキストに基づき、AIが正確に回答します。
-資料間矛盾チェック: 複数の資料を比較し、数値や手順の食い違いを自動で指摘します。
-マルチユーザー管理: ユーザーごとに独立したストレージを持ち、自分専用の解析環境を構築できます。
-完全ローカル運用: データは外部に流出せず、Dockerコンテナ内で完結します。
-このイメージを実行するには、ローカルに Ollama が必要です。
+---
 
-リポジトリをクローンまたは設定ファイルを準備
-docker-compose.yml を実行
-🛠️ クイックスタート (GPU推奨)
-以下の docker-compose.yml を使用することで、アプリとAIエンジン(Ollama)をセットで起動できます。
+## 🛠️ セットアップ手順
 
-services:
-  # 1. 解析アプリ
-  app:
-    image: senkounosenkou/closed-book-ai:v1.0
-    ports:
-      - "8501:8501"
-    volumes:
-      - ./data:/data
-      - ./storage:/app/storage
-      - ./config.yaml:/app/config.yaml
-    depends_on:
-      - ollama
+本リポジトリをクローンした後、以下の2ステップで環境を構築します。
 
-  # 2. AIエンジン (Ollama)
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    restart: unless-stopped
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all
-      - OLLAMA_HOST=0.0.0.0
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
+### 1. 推論エンジン (Ollama) の準備
+モデルデータの永続化とパフォーマンス向上のため、Dockerの名前付きボリュームを利用します。
 
-volumes:
-  ollama_data:
-アクセス: http://localhost:8501
+```bash
+# 1. データ保存用の領域（ボリューム）を事前に作成
+docker volume create ollama_ollama
 
-初回ログイン用: admin / 123
+# 2. Ollama専用の設定ディレクトリへ移動
+cd ollama
+
+# 3. AIエンジンを起動（ollama_default ネットワークが自動生成されます）
+docker-compose up -d
+
+# 4. ルートディレクトリに戻る
+cd ..
+
+
+###2. 解析アプリ (Closed-Book) の起動
+次に、アプリ本体を起動します。アプリは外部ネットワークを通じて自動的にエンジンへ接続します。
+
+Bash
+# ルートディレクトリで実行
+docker-compose up -d
+
+##🚀 アクセスと初期設定
+URL: http://localhost:8501
+
+初期ユーザー: admin
+
+初期パスワード: 123
+
+[!IMPORTANT]
+セキュリティに関する注意
+初回ログイン後、サイドバーの設定メニューから必ずパスワードを自身のものに変更してください。本アプリはローカル運用を想定していますが、適切なパスワード管理を推奨します。
+
+##📋 動作要件
+Docker / Docker Compose
+
+NVIDIA GPU (推奨)
+
+NVIDIA Container Toolkit (GPU利用時)

@@ -1,0 +1,25 @@
+services:
+  ollama:
+    image: ollama/ollama:0.13.5
+    pull_policy: if_not_present    #なければハブからダウンロード
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_ollama:/root/.ollama   # 既存のVolumeをマウント
+    environment:
+      - OLLAMA_GPU_OVERHEAD=0        # GPU使用時のオーバーヘッド調整
+      - NVIDIA_VISIBLE_DEVICES=all   # すべてのGPUを使う
+      - OLLAMA_HOST=0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+volumes:
+  ollama_ollama:
+    external: true  # 既存Volumeを使う場合は external:true
