@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ⚡ Closed-Book AI (Local RAG Platform)
 
 Local LLM (Ollama) を活用した、プライバシー重視のドキュメント解析プラットフォームです。
@@ -50,3 +51,18 @@ Docker / Docker Compose
 NVIDIA GPU (推奨)
 
 NVIDIA Container Toolkit (GPU利用時)
+=======
+🛠️ セットアップ手順
+
+このシステムは「解析アプリ」と「AIエンジン(Ollama)」を分離して管理しています。
+
+1. AIエンジン (Ollama) の準備
+既存の Ollama 環境を使用するか、ネットワーク名 `ollama_default` で Ollama を起動しておいてください。
+
+2. アプリの起動
+リポジトリをクローンし、以下のコマンドで起動します。
+$ docker-compose up -d
+
+アクセス: http://localhost:8501
+初回ログイン用: admin / 123（※利用開始後に必ず変更してください）
+>>>>>>> 5de05cfd0f490170d3d324e48ba6c57c0ff6619d
