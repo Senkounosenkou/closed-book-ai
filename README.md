@@ -3,6 +3,7 @@
 Local LLM (Ollama) を活用した、プライバシー重視のドキュメント解析プラットフォームです。
 本プロジェクトは、**「AI推論エンジン (Ollama)」** と **「解析アプリ (Streamlit)」** を分離して管理する疎結合なインフラ構成を採用しています。
 
+DockerHub  https://hub.docker.com/repository/docker/senkounosenkou/closed-book-ai/general
 ---
 
 ## 🛠️ セットアップ手順
