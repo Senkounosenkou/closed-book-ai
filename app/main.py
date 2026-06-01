@@ -237,9 +237,16 @@ with st.sidebar:
 
     if st.button("🔄 インデックスを再構築", use_container_width=True, disabled=is_locked):
         if os.path.exists(PERSIST_DIR):
-            shutil.rmtree(PERSIST_DIR)
-            os.makedirs(PERSIST_DIR)
-            os.makedirs(CHAT_LOG_DIR)
+            for item in os.listdir(PERSIST_DIR):
+                if item == "chat_history":
+                    continue  # チャット履歴は守る
+                
+                item_path = os.path.join(PERSIST_DIR, item)
+                if os.path.isfile(item_path):
+                    os.remove(item_path)
+                elif os.path.isdir(item_path):
+                    shutil.rmtree(item_path)
+                    
         st.success("記憶をリセットしました。")
         st.rerun()
 
